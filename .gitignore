@@ -1,0 +1,14 @@
+
+# MacOS system files
+*.DS_Store
+
+# IDE, Python binary files
+.ipynb_checkpoints
+*.pyc
+.idea/
+
+# Assembly files for publishing
+*egg-info/*
+dist/*
+build/*
+coverage.xml

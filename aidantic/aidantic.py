@@ -2,7 +2,7 @@ __author__ = "AivanF"
 __copyright__ = "AivanF"
 __email__ = "projects@aivanf.com"
 __license__ = "GPL3"
-__version__ = "2022.04.12"
+__version__ = "2022.04.27"
 __status__ = "Dev"
 
 
@@ -129,7 +129,7 @@ class BaseModelMeta(type):
         cls: Type["BaseModel"]
         cls = super().__new__(mcs, name, bases, namespace)
 
-        # Hanle OneOf logic
+        # Handle OneOf logic
         if "_discriminator" in namespace:
             if isinstance(cls._discriminator, str):
                 cls._discriminator = (cls._discriminator,)
@@ -390,6 +390,10 @@ class ModelCreator(ModelVisitorBase):
         if isinstance(value, parent):
             return value
         # Try create from keys
+        if parent not in TRACKED_MODEL_KEYS:
+            raise CreationError(
+                f"No registered OneOf models for {parent}", path
+            )
         key_names = TRACKED_MODEL_KEYS[parent]
         keys = None
         kwargs = value
